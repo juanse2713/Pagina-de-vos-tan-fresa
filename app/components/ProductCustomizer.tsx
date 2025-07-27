@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -22,36 +23,129 @@ export default function ProductCustomizer({
   const [selectedFruits, setSelectedFruits] = useState([]);
   const [selectedSauces, setSelectedSauces] = useState([]);
   const [selectedFilling, setSelectedFilling] = useState('');
+  const [selectedOblea, setSelectedOblea] = useState('');
 
-  // Tamaños reales del menú
+  // Tamaños reales del menú con inclusiones
   const sizes = {
     fresas: [
-      { id: 'mini', name: 'Mini Fresa 6onz', price: 7000, includes: 'Incluye una salsa' },
-      { id: 'baby', name: 'Baby Fresa 8onz', price: 10000, includes: 'Incluye una salsa' },
-      { id: 'muy', name: 'Muy Fresa 10onz', price: 13000, includes: 'Incluye dos salsas y dos toppings clásicos' },
-      { id: 'super', name: 'Super Fresa 12onz', price: 17000, includes: 'Incluye dos salsas, dos toppings clásicos y uno premium' },
-      { id: 'frescoloco', name: 'Fresco Loco 24onz', price: 24000, includes: 'Incluye tres salsas, tres toppings clásicos y dos premium' }
+      { 
+        id: 'mini', 
+        name: 'Mini Fresa 6onz', 
+        price: 7000, 
+        includes: 'Incluye una salsa',
+        saucesIncluded: 1,
+        classicToppingsIncluded: 0,
+        premiumToppingsIncluded: 0
+      },
+      { 
+        id: 'baby', 
+        name: 'Baby Fresa 8onz', 
+        price: 10000, 
+        includes: 'Incluye una salsa',
+        saucesIncluded: 1,
+        classicToppingsIncluded: 0,
+        premiumToppingsIncluded: 0
+      },
+      { 
+        id: 'muy', 
+        name: 'Muy Fresa 10onz', 
+        price: 13000, 
+        includes: 'Incluye dos salsas y dos toppings clásicos',
+        saucesIncluded: 2,
+        classicToppingsIncluded: 2,
+        premiumToppingsIncluded: 0
+      },
+      { 
+        id: 'super', 
+        name: 'Super Fresa 12onz', 
+        price: 17000, 
+        includes: 'Incluye dos salsas, dos toppings clásicos y uno premium',
+        saucesIncluded: 2,
+        classicToppingsIncluded: 2,
+        premiumToppingsIncluded: 1
+      },
+      { 
+        id: 'frescoloco', 
+        name: 'Fresco Loco 24onz', 
+        price: 24000, 
+        includes: 'Incluye tres salsas, tres toppings clásicos y dos premium',
+        saucesIncluded: 3,
+        classicToppingsIncluded: 3,
+        premiumToppingsIncluded: 2
+      }
     ],
     frutas: {
       cerezas: [
-        { id: 'baby_cherry', name: 'Baby Cherry', price: 14000, includes: 'Ninguno incluye topping' },
-        { id: 'muy_cherry', name: 'Muy Cherry', price: 17000, includes: 'Ninguno incluye topping' },
-        { id: 'super_cherry', name: 'Super Cherry', price: 21000, includes: 'Ninguno incluye topping' }
+        { id: 'baby_cherry', name: 'Baby Cherry', price: 14000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 },
+        { id: 'muy_cherry', name: 'Muy Cherry', price: 17000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 },
+        { id: 'super_cherry', name: 'Super Cherry', price: 21000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 }
       ],
       duraznos: [
-        { id: 'baby_durazno', name: 'Baby Durazno', price: 12000, includes: 'Ninguno incluye topping' },
-        { id: 'muy_durazno', name: 'Muy Durazno', price: 14000, includes: 'Ninguno incluye topping' },
-        { id: 'super_durazno', name: 'Super Durazno', price: 18000, includes: 'Ninguno incluye topping' }
+        { id: 'baby_durazno', name: 'Baby Durazno', price: 12000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 },
+        { id: 'muy_durazno', name: 'Muy Durazno', price: 14000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 },
+        { id: 'super_durazno', name: 'Super Durazno', price: 18000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 }
       ],
       bananos: [
-        { id: 'baby_banana', name: 'Baby Banana', price: 9000, includes: 'Ninguno incluye topping' },
-        { id: 'muy_banana', name: 'Muy Banana', price: 12000, includes: 'Ninguno incluye topping' }
+        { id: 'baby_banana', name: 'Baby Banana', price: 9000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 },
+        { id: 'muy_banana', name: 'Muy Banana', price: 12000, includes: 'Ninguno incluye topping', saucesIncluded: 0, classicToppingsIncluded: 0, premiumToppingsIncluded: 0 }
       ]
-    }
+    },
+    chocolate: [
+      { 
+        id: 'choco_baby', 
+        name: 'Choco Baby', 
+        price: 16000, 
+        includes: 'Incluye un topping, puedes elegir',
+        saucesIncluded: 0,
+        classicToppingsIncluded: 1,
+        premiumToppingsIncluded: 0
+      },
+      { 
+        id: 'choco_super', 
+        name: 'Choco Super', 
+        price: 22000, 
+        includes: 'Incluye un topping, puedes elegir',
+        saucesIncluded: 0,
+        classicToppingsIncluded: 1,
+        premiumToppingsIncluded: 0
+      }
+    ],
+    obleas: [
+      { 
+        id: 'pipona', 
+        name: 'Pipona', 
+        price: 5500, 
+        includes: 'Incluye una oblea, dos salsas, crema y queso',
+        saucesIncluded: 2,
+        classicToppingsIncluded: 0,
+        premiumToppingsIncluded: 0
+      },
+      { 
+        id: 'bichota', 
+        name: 'Bichota', 
+        price: 8500, 
+        includes: 'Incluye dos obleas, dos salsas, crema, queso y fruta',
+        saucesIncluded: 2,
+        classicToppingsIncluded: 0,
+        premiumToppingsIncluded: 0
+      },
+      { 
+        id: 'combi_completa', 
+        name: 'Combi Completa', 
+        price: 10500, 
+        includes: 'Incluye tres obleas, tres salsas, crema, queso, fruta y topping clásico',
+        saucesIncluded: 3,
+        classicToppingsIncluded: 1,
+        premiumToppingsIncluded: 0
+      }
+    ]
   };
 
   // Salsas del menú
   const sauces = ['Arequipe', 'Chocolate', 'Mora', 'Cereza', 'Lecherita'];
+
+  // Toppings clásicos para chocolate (precio adicional $2000)
+  const toppingsClasicosChocolate = ['Oreo', 'Leche en polvo', 'Milo', 'Maní', 'Crema'];
 
   // Toppings clásicos (precio adicional $2000)
   const toppingsClasicos = [
@@ -85,20 +179,55 @@ export default function ProductCustomizer({
     }
   };
 
-  const calculatePrice = () => {
+  const getCurrentSizeData = () => {
     if (category === 'fresas') {
-      const basePrice = sizes.fresas.find(s => s.id === selectedSize)?.price || 0;
-      const clasicosPrice = selectedIngredients.filter(i => toppingsClasicos.includes(i)).length * 2000;
-      const premiumPrice = selectedIngredients.filter(i => toppingsPremium.includes(i)).length * 3000;
-      return basePrice + clasicosPrice + premiumPrice;
-    } else if (category === 'frutas') {
-      const fruitSizes = sizes.frutas[selectedFruitType] || [];
-      const basePrice = fruitSizes.find(s => s.id === selectedSize)?.price || 0;
-      const clasicosPrice = selectedIngredients.filter(i => toppingsClasicos.includes(i)).length * 2000;
-      const premiumPrice = selectedIngredients.filter(i => toppingsPremium.includes(i)).length * 3000;
-      return basePrice + clasicosPrice + premiumPrice;
+      return sizes.fresas.find(s => s.id === selectedSize);
+    } else if (category === 'frutas' && selectedFruitType) {
+      return sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize);
+    } else if (category === 'chocolate') {
+      return sizes.chocolate.find(s => s.id === selectedSize);
+    } else if (category === 'obleas') {
+      return sizes.obleas.find(s => s.id === selectedOblea);
     }
-    return 0;
+    return null;
+  };
+
+  const calculatePrice = () => {
+    const sizeData = getCurrentSizeData();
+    if (!sizeData) return 0;
+
+    const basePrice = sizeData.price;
+    
+    // Calcular salsas extras
+    const extraSauces = Math.max(0, selectedSauces.length - sizeData.saucesIncluded);
+    const extraSaucesPrice = extraSauces * 0; // Las salsas extras no tienen costo adicional según el menú
+    
+    // Calcular toppings clásicos extras
+    const availableClassicToppings = category === 'chocolate' ? toppingsClasicosChocolate : toppingsClasicos;
+    const selectedClassicToppings = selectedIngredients.filter(i => availableClassicToppings.includes(i));
+    const extraClassicToppings = Math.max(0, selectedClassicToppings.length - sizeData.classicToppingsIncluded);
+    const extraClassicToppingsPrice = extraClassicToppings * 2000;
+    
+    // Calcular toppings premium extras
+    const selectedPremiumToppings = selectedIngredients.filter(i => toppingsPremium.includes(i));
+    const extraPremiumToppings = Math.max(0, selectedPremiumToppings.length - sizeData.premiumToppingsIncluded);
+    const extraPremiumToppingsPrice = extraPremiumToppings * 3000;
+    
+    return basePrice + extraSaucesPrice + extraClassicToppingsPrice + extraPremiumToppingsPrice;
+  };
+
+  const getExtraCharges = () => {
+    const sizeData = getCurrentSizeData();
+    if (!sizeData) return { extraClassic: 0, extraPremium: 0 };
+
+    const availableClassicToppings = category === 'chocolate' ? toppingsClasicosChocolate : toppingsClasicos;
+    const selectedClassicToppings = selectedIngredients.filter(i => availableClassicToppings.includes(i));
+    const extraClassic = Math.max(0, selectedClassicToppings.length - sizeData.classicToppingsIncluded);
+    
+    const selectedPremiumToppings = selectedIngredients.filter(i => toppingsPremium.includes(i));
+    const extraPremium = Math.max(0, selectedPremiumToppings.length - sizeData.premiumToppingsIncluded);
+    
+    return { extraClassic, extraPremium };
   };
 
   const handleAddToCart = () => {
@@ -109,9 +238,12 @@ export default function ProductCustomizer({
       ingredients: selectedIngredients,
       sauces: selectedSauces,
       filling: selectedFilling,
+      oblea: selectedOblea,
       price: calculatePrice(),
       sizeName: category === 'fresas' ? sizes.fresas.find(s => s.id === selectedSize)?.name : 
-                category === 'frutas' ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name : ''
+                category === 'frutas' ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name :
+                category === 'chocolate' ? sizes.chocolate.find(s => s.id === selectedSize)?.name :
+                category === 'obleas' ? sizes.obleas.find(s => s.id === selectedOblea)?.name : ''
     };
     onAddToCart(product);
     
@@ -122,12 +254,14 @@ export default function ProductCustomizer({
     setSelectedSauces([]);
     setSelectedFilling('');
     setSelectedFruitType('');
+    setSelectedOblea('');
   };
 
   const getCategoryTitle = () => {
     switch(category) {
       case 'fresas': return 'Fresas con Crema';
       case 'frutas': return 'Otras Frutas con Crema';
+      case 'chocolate': return 'Fresas con Chocolate';
       case 'obleas': return 'Obleas';
       default: return '';
     }
@@ -140,14 +274,20 @@ export default function ProductCustomizer({
     if (category === 'frutas') {
       return selectedSize && selectedFruitType;
     }
+    if (category === 'chocolate') {
+      return selectedSize;
+    }
     if (category === 'obleas') {
-      return selectedFilling;
+      return selectedOblea;
     }
     return false;
   };
 
+  const sizeData = getCurrentSizeData();
+  const extraCharges = getExtraCharges();
+
   return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-pink-50 to-red-50">
+    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-pink-50 to-red-50" suppressHydrationWarning={true}>
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center justify-between">
@@ -292,10 +432,83 @@ export default function ProductCustomizer({
             </>
           )}
 
-          {/* Salsas */}
-          {(category === 'fresas' || category === 'frutas') && (
+          {/* Fresas con chocolate */}
+          {category === 'chocolate' && (
             <div className="bg-white rounded-xl p-6 shadow-lg">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Salsas</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Tamaños</h3>
+              <div className="space-y-3">
+                {sizes.chocolate.map((size) => (
+                  <label
+                    key={size.id}
+                    className={`flex flex-col p-4 rounded-lg transition-colors cursor-pointer ${
+                      selectedSize === size.id ? 'bg-amber-100 border-2 border-amber-300' : 'bg-gray-50 hover:bg-gray-100'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="radio"
+                          name="size"
+                          value={size.id}
+                          checked={selectedSize === size.id}
+                          onChange={(e) => setSelectedSize(e.target.value)}
+                          className="text-amber-500"
+                        />
+                        <span className="font-medium text-gray-700">{size.name}</span>
+                      </div>
+                      <span className="text-amber-600 font-semibold">${size.price.toLocaleString()}</span>
+                    </div>
+                    <span className="text-sm text-amber-500 font-medium ml-6">{size.includes}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Obleas */}
+          {category === 'obleas' && (
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Opciones de Obleas</h3>
+              <div className="space-y-3">
+                {sizes.obleas.map((oblea) => (
+                  <label
+                    key={oblea.id}
+                    className={`flex flex-col p-4 rounded-lg transition-colors cursor-pointer ${
+                      selectedOblea === oblea.id ? 'bg-pink-100 border-2 border-pink-300' : 'bg-gray-50 hover:bg-gray-100'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="radio"
+                          name="oblea"
+                          value={oblea.id}
+                          checked={selectedOblea === oblea.id}
+                          onChange={(e) => setSelectedOblea(e.target.value)}
+                          className="text-pink-500"
+                        />
+                        <span className="font-medium text-gray-700">{oblea.name}</span>
+                      </div>
+                      <span className="text-pink-600 font-semibold">${oblea.price.toLocaleString()}</span>
+                    </div>
+                    <span className="text-sm text-pink-500 font-medium ml-6">{oblea.includes}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Salsas */}
+          {(category === 'fresas' || category === 'frutas' || category === 'obleas') && (
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Salsas
+                {sizeData && sizeData.saucesIncluded > 0 && (
+                  <span className="text-sm text-pink-500 font-normal ml-2">
+                    ({sizeData.saucesIncluded} incluidas)
+                  </span>
+                )}
+              </h3>
               <div className="grid grid-cols-2 gap-3">
                 {sauces.map((sauce) => (
                   <label
@@ -318,13 +531,23 @@ export default function ProductCustomizer({
           )}
 
           {/* Toppings Clásicos */}
-          {(category === 'fresas' || category === 'frutas') && (
+          {(category === 'fresas' || category === 'frutas' || category === 'chocolate' || category === 'obleas') && (
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Toppings Clásicos (+$2.000 c/u)
+                Toppings Clásicos
+                {sizeData && sizeData.classicToppingsIncluded > 0 && (
+                  <span className="text-sm text-pink-500 font-normal ml-2">
+                    ({sizeData.classicToppingsIncluded} incluidos)
+                  </span>
+                )}
+                {extraCharges.extraClassic > 0 && (
+                  <span className="text-sm text-orange-500 font-normal ml-2">
+                    (+{extraCharges.extraClassic} extras: ${extraCharges.extraClassic * 2000})
+                  </span>
+                )}
               </h3>
               <div className="grid grid-cols-2 gap-3">
-                {toppingsClasicos.map((topping) => (
+                {(category === 'chocolate' ? toppingsClasicosChocolate : toppingsClasicos).map((topping) => (
                   <label
                     key={topping}
                     className={`flex items-center space-x-3 p-3 rounded-lg transition-colors cursor-pointer ${
@@ -345,10 +568,20 @@ export default function ProductCustomizer({
           )}
 
           {/* Toppings Premium */}
-          {(category === 'fresas' || category === 'frutas') && (
+          {(category === 'fresas' || category === 'frutas' || category === 'chocolate' || category === 'obleas') && (
             <div className="bg-white rounded-xl p-6 shadow-lg">
               <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                Toppings Premium (+$3.000 c/u)
+                Toppings Premium
+                {sizeData && sizeData.premiumToppingsIncluded > 0 && (
+                  <span className="text-sm text-pink-500 font-normal ml-2">
+                    ({sizeData.premiumToppingsIncluded} incluidos)
+                  </span>
+                )}
+                {extraCharges.extraPremium > 0 && (
+                  <span className="text-sm text-orange-500 font-normal ml-2">
+                    (+{extraCharges.extraPremium} extras: ${extraCharges.extraPremium * 3000})
+                  </span>
+                )}
               </h3>
               <div className="grid grid-cols-2 gap-3">
                 {toppingsPremium.map((topping) => (
@@ -394,7 +627,17 @@ export default function ProductCustomizer({
                 <span className="text-gray-600">Tamaño:</span>
                 <span className="font-medium">
                   {category === 'fresas' ? sizes.fresas.find(s => s.id === selectedSize)?.name : 
-                   category === 'frutas' ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name : ''}
+                   category === 'frutas' ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name : 
+                   category === 'chocolate' ? sizes.chocolate.find(s => s.id === selectedSize)?.name : ''}
+                </span>
+              </div>
+            )}
+
+            {selectedOblea && (
+              <div className="flex justify-between">
+                <span className="text-gray-600">Oblea:</span>
+                <span className="font-medium">
+                  {sizes.obleas.find(s => s.id === selectedOblea)?.name}
                 </span>
               </div>
             )}
@@ -410,6 +653,28 @@ export default function ProductCustomizer({
               <div className="flex justify-between">
                 <span className="text-gray-600">Toppings:</span>
                 <span className="font-medium">{selectedIngredients.join(', ')}</span>
+              </div>
+            )}
+
+            {/* Mostrar desglose de precios */}
+            {sizeData && (
+              <div className="mt-4 pt-4 border-t">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Precio base:</span>
+                  <span>${sizeData.price.toLocaleString()}</span>
+                </div>
+                {extraCharges.extraClassic > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Toppings clásicos extras ({extraCharges.extraClassic}):</span>
+                    <span>+${(extraCharges.extraClassic * 2000).toLocaleString()}</span>
+                  </div>
+                )}
+                {extraCharges.extraPremium > 0 && (
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Toppings premium extras ({extraCharges.extraPremium}):</span>
+                    <span>+${(extraCharges.extraPremium * 3000).toLocaleString()}</span>
+                  </div>
+                )}
               </div>
             )}
           </div>

@@ -1,6 +1,13 @@
 
 'use client';
 
+type Ingredient = {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+};
+
 interface CategorySelectorProps {
   onCategorySelect: (category: string) => void;
   onViewCart: () => void;
@@ -8,7 +15,16 @@ interface CategorySelectorProps {
 }
 
 export default function CategorySelector({ onCategorySelect, onViewCart, cartCount }: CategorySelectorProps) {
-  const categories = [
+  type Category = {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  bgColor: string;
+};
+const categories: Category[] = [
+    
     {
       id: 'fresas',
       name: 'Fresas con Crema',
@@ -26,6 +42,14 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       bgColor: 'bg-orange-50'
     },
     {
+      id: 'chocolate',
+      name: 'Fresas con Chocolate',
+      description: 'Fresas frescas bañadas en delicioso chocolate con toppings',
+      icon: 'ri-cup-fill',
+      color: 'from-amber-600 to-red-600',
+      bgColor: 'bg-amber-50'
+    },
+    {
       id: 'obleas',
       name: 'Obleas',
       description: 'Obleas crujientes con rellenos deliciosos y ingredientes extra',
@@ -38,6 +62,7 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
   return (
     <div className="min-h-screen px-4 py-8">
       {/* Header */}
+      
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
@@ -66,8 +91,8 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
 
       {/* Categories grid */}
       <div className="max-w-4xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-6">
-          {categories.map((category) => (
+        <div className="grid md:grid-cols-2 gap-6">
+          {categories.map((category: Category) => (
             <div
               key={category.id}
               className={`${category.bgColor} rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105`}

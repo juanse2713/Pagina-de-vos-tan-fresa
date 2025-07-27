@@ -1,4 +1,7 @@
+
 'use client';
+
+import { useState } from 'react';
 
 interface CartProps {
   cart: any[];
@@ -7,6 +10,14 @@ interface CartProps {
 }
 
 export default function Cart({ cart, onBackToCategories, onRemoveFromCart }: CartProps) {
+  const [showDeliveryForm, setShowDeliveryForm] = useState(false);
+  const [deliveryData, setDeliveryData] = useState({
+    name: '',
+    address: '',
+    reference: '',
+    phone: ''
+  });
+
   const getTotalPrice = () => {
     return cart.reduce((total, item) => total + item.price, 0);
   };
@@ -15,12 +26,18 @@ export default function Cart({ cart, onBackToCategories, onRemoveFromCart }: Car
     switch(category) {
       case 'fresas': return 'Fresas con Crema';
       case 'frutas': return 'Otras Frutas con Crema';
+      case 'chocolate': return 'Fresas con Chocolate';
       case 'obleas': return 'Obleas';
       default: return '';
     }
   };
 
   const handleFinishOrder = () => {
+    if (!deliveryData.name || !deliveryData.address || !deliveryData.phone) {
+      alert('Por favor completa todos los campos requeridos');
+      return;
+    }
+
     const orderSummary = cart.map(item => {
       let summary = `${getCategoryName(item.category)}`;
       if (item.sizeName) summary += ` - ${item.sizeName}`;
@@ -31,17 +48,31 @@ export default function Cart({ cart, onBackToCategories, onRemoveFromCart }: Car
       return summary;
     }).join('\n');
 
-    const total = getTotalPrice() + 3000;
-    const message = `🍓 PEDIDO VOS TAN FRESA 🍓\n\n${orderSummary}\n\nSubtotal: $${getTotalPrice().toLocaleString()}\nDomicilio: $3.000\nTOTAL: $${total.toLocaleString()}\n\n¡Gracias por tu pedido!`;
+    const deliveryInfo = ` DATOS DE ENTREGA:
+Nombre: ${deliveryData.name}
+Dirección: ${deliveryData.address}
+${deliveryData.reference ? `Referencia: ${deliveryData.reference}
+` : ''}
+Teléfono: ${deliveryData.phone}
+`;
+
+    const message = ` PEDIDO VOS TAN FRESA 
+${orderSummary}
+
+TOTAL: $${getTotalPrice().toLocaleString()}
+${deliveryInfo}
+¡Gracias por tu pedido!`;
     
-    const whatsappNumber = '573001234567'; // Cambiar por el número real
+    const whatsappNumber = '573044547498';
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     
-    window.open(whatsappURL, '_blank');
+    if (typeof window !== 'undefined') {
+      window.open(whatsappURL, '_blank');
+    }
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-pink-50 to-red-50">
+    <div className="min-h-screen px-4 py-8 bg-gradient-to-br from-pink-50 to-red-50" suppressHydrationWarning={true}>
       {/* Header */}
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center justify-between">
@@ -143,36 +174,109 @@ export default function Cart({ cart, onBackToCategories, onRemoveFromCart }: Car
                   <span className="text-gray-600">Productos ({cart.length}):</span>
                   <span className="font-medium">${getTotalPrice().toLocaleString()}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Domicilio:</span>
-                  <span className="font-medium">$3.000</span>
-                </div>
                 <div className="border-t pt-3">
                   <div className="flex justify-between text-lg font-semibold">
                     <span>Total:</span>
-                    <span className="text-pink-600">${(getTotalPrice() + 3000).toLocaleString()}</span>
+                    <span className="text-pink-600">${getTotalPrice().toLocaleString()}</span>
                   </div>
                 </div>
               </div>
               
-              <div className="space-y-3">
-                <button
-                  onClick={handleFinishOrder}
-                  className="w-full bg-gradient-to-r from-pink-400 to-red-400 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-500 hover:to-red-500 transition-all duration-300 whitespace-nowrap cursor-pointer flex items-center justify-center space-x-2"
-                >
-                  <div className="w-5 h-5 flex items-center justify-center">
-                    <i className="ri-whatsapp-line text-xl"></i>
+              {!showDeliveryForm ? (
+                <div className="space-y-3">
+                  <button
+                    onClick={() => setShowDeliveryForm(true)}
+                    className="w-full bg-gradient-to-r from-pink-400 to-red-400 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-500 hover:to-red-500 transition-all duration-300 whitespace-nowrap cursor-pointer flex items-center justify-center space-x-2"
+                  >
+                    <div className="w-5 h-5 flex items-center justify-center">
+                      <i className="ri-whatsapp-line text-xl"></i>
+                    </div>
+                    <span>Realizar Pedido</span>
+                  </button>
+                  
+                  <button
+                    onClick={onBackToCategories}
+                    className="w-full bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-full hover:bg-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                  >
+                    Seguir Comprando
+                  </button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <h4 className="text-lg font-semibold text-gray-800">
+                    Datos de Entrega
+                  </h4>
+                  
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Nombre de quien recibe *
+                      </label>
+                      <input
+                        type="text"
+                        value={deliveryData.name}
+                        onChange={(e) => setDeliveryData({...deliveryData, name: e.target.value})}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        placeholder="Ingresa el nombre"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Dirección *
+                      </label>
+                      <input
+                        type="text"
+                        value={deliveryData.address}
+                        onChange={(e) => setDeliveryData({...deliveryData, address: e.target.value})}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        placeholder="Ingresa la dirección completa"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Punto de referencia
+                      </label>
+                      <input
+                        type="text"
+                        value={deliveryData.reference}
+                        onChange={(e) => setDeliveryData({...deliveryData, reference: e.target.value})}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        placeholder="Ej: Cerca del parque, frente a la tienda..."
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Número de contacto *
+                      </label>
+                      <input
+                        type="tel"
+                        value={deliveryData.phone}
+                        onChange={(e) => setDeliveryData({...deliveryData, phone: e.target.value})}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                        placeholder="Ej: 3001234567"
+                      />
+                    </div>
                   </div>
-                  <span>Enviar Pedido por WhatsApp</span>
-                </button>
-                
-                <button
-                  onClick={onBackToCategories}
-                  className="w-full bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-full hover:bg-gray-300 transition-colors whitespace-nowrap cursor-pointer"
-                >
-                  Seguir Comprando
-                </button>
-              </div>
+                  
+                  <div className="flex space-x-3 mt-6">
+                    <button
+                      onClick={() => setShowDeliveryForm(false)}
+                      className="flex-1 bg-gray-200 text-gray-700 font-semibold py-3 px-6 rounded-full hover:bg-gray-300 transition-colors whitespace-nowrap cursor-pointer"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={handleFinishOrder}
+                      className="flex-1 bg-gradient-to-r from-pink-400 to-red-400 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-500 hover:to-red-500 transition-all duration-300 whitespace-nowrap cursor-pointer"
+                    >
+                      Enviar Pedido
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
