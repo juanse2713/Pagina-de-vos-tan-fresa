@@ -26,7 +26,7 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       description: 'Fresas frescas con deliciosa crema y tus ingredientes favoritos',
       image: (
         <img
-          src= "public/fresa1.png"
+          src= "/images/fresa1.png"
           alt="Fresas con Crema"
           className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
         />
@@ -39,7 +39,7 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       description: 'Cerezas, duraznos, bananos con crema y salsas especiales',
       image: (
         <img
-          src="/public/fresa2.png"
+          src="/images/fresa2.png"
           alt="Otras Frutas con Crema"
           className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
         />
@@ -52,7 +52,7 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       description: 'Fresas frescas bañadas en delicioso chocolate con toppings',
       image: (
         <img
-          src="/public/fresa3.png"
+          src="/images/fresa3.png"
           alt="Fresas con Chocolate"
           className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
         />
@@ -65,7 +65,7 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       description: 'Obleas crujientes con rellenos deliciosos y ingredientes extra',
       image: (
         <img
-          src="/public/fresa1.png"
+          src="/images/fresa1.png"
           alt="Obleas"
           className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
         />
