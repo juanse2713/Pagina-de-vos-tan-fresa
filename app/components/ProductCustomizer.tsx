@@ -344,7 +344,7 @@ export default function ProductCustomizer({
                           name="size"
                           value={size.id}
                           checked={selectedSize === size.id}
-                          onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
+                          onChange={(e) => setSelectedSize(e.target.value)}
                           className="text-pink-500"
                         />
                         <span className="font-medium text-gray-700">{size.name}</span>
@@ -370,7 +370,7 @@ export default function ProductCustomizer({
                       name="fruitType"
                       value="cerezas"
                       checked={selectedFruitType === 'cerezas'}
-                      onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
+                      onChange={(e) => setSelectedSize(e.target.value as FruitType)}
                       className="text-pink-500"
                     />
                     <span className="font-medium text-gray-700">Cerezas</span>
