@@ -20,10 +20,12 @@ export default function WelcomeScreen({ onStartOrder }: WelcomeScreenProps) {
       <div className="text-center z-10 max-w-md">
         {/* Logo */}
         <div className="mb-8">
-          <div className="w-32 h-32 mx-auto bg-gradient-to-br from-pink-200 to-red-200 rounded-full flex items-center justify-center shadow-lg mb-4">
-            <div className="w-6 h-6 flex items-center justify-center">
-              <i className="ri-heart-fill text-4xl text-red-500"></i>
-            </div>
+          <div className="w-32 h-32 mx-auto bg-gradient-to-br from-pink-200 to-red-200 rounded-full flex items-center justify-center shadow-lg mb-4 overflow-hidden">
+            <img
+              src="/images/logo.png"
+              alt="Logo de Vos Tan Fresa"
+              className="w-24 h-24 object-contain"
+            />
           </div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Pacifico, serif' }}>
             Vos Tan Fresa
