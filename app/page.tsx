@@ -1,16 +1,25 @@
-
 'use client';
-
 import { useState, useEffect } from 'react';
 import WelcomeScreen from './components/WelcomeScreen';
 import CategorySelector from './components/CategorySelector';
 import ProductCustomizer from './components/ProductCustomizer';
 import Cart from './components/Cart';
 
+// 👉 Define los tipos necesarios
+type Category = 'fresas' | 'frutas' | 'chocolate' | 'obleas' | ''; // según tus categorías
+
+type Product = {
+  id?: number;
+  name: string;
+  price: number;
+  sizeName: string;
+  // agrega más propiedades si las usás en Cart o elsewhere
+};
+
 export default function Home() {
-  const [currentScreen, setCurrentScreen] = useState('welcome');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [cart, setCart] = useState([]);
+  const [currentScreen, setCurrentScreen] = useState<'welcome' | 'categories' | 'customize' | 'cart'>('welcome');
+  const [selectedCategory, setSelectedCategory] = useState<Category>('');
+  const [cart, setCart] = useState<Product[]>([]);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -21,7 +30,7 @@ export default function Home() {
     setCurrentScreen('categories');
   };
 
-  const handleCategorySelect = (category) => {
+  const handleCategorySelect = (category: Category) => {
     setSelectedCategory(category);
     setCurrentScreen('customize');
   };
@@ -30,7 +39,7 @@ export default function Home() {
     setCurrentScreen('categories');
   };
 
-  const handleAddToCart = (product) => {
+  const handleAddToCart = (product: Product) => {
     setCart([...cart, { ...product, id: Date.now() }]);
   };
 
@@ -38,7 +47,7 @@ export default function Home() {
     setCurrentScreen('cart');
   };
 
-  const handleRemoveFromCart = (id) => {
+  const handleRemoveFromCart = (id: number) => {
     setCart(cart.filter(item => item.id !== id));
   };
 
@@ -64,17 +73,17 @@ export default function Home() {
       {currentScreen === 'welcome' && (
         <WelcomeScreen onStartOrder={handleStartOrder} />
       )}
-      
+
       {currentScreen === 'categories' && (
-        <CategorySelector 
+        <CategorySelector
           onCategorySelect={handleCategorySelect}
           onViewCart={handleViewCart}
           cartCount={cart.length}
         />
       )}
-      
+
       {currentScreen === 'customize' && (
-        <ProductCustomizer 
+        <ProductCustomizer
           category={selectedCategory}
           onBackToCategories={handleBackToCategories}
           onAddToCart={handleAddToCart}
@@ -82,9 +91,9 @@ export default function Home() {
           cartCount={cart.length}
         />
       )}
-      
+
       {currentScreen === 'cart' && (
-        <Cart 
+        <Cart
           cart={cart}
           onBackToCategories={handleBackToCategories}
           onRemoveFromCart={handleRemoveFromCart}

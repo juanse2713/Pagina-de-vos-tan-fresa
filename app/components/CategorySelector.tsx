@@ -1,30 +1,26 @@
-
 'use client';
 
-type Ingredient = {
-  id: string;
-  name: string;
-  image: string;
-  price: number;
-};
+// Mantener este: union type
+export type Category = 'fresas' | 'frutas' | 'chocolate' | 'obleas' | '';
 
-interface CategorySelectorProps {
-  onCategorySelect: (category: string) => void;
-  onViewCart: () => void;
-  cartCount: number;
-}
-
-export default function CategorySelector({ onCategorySelect, onViewCart, cartCount }: CategorySelectorProps) {
-  type Category = {
-  id: string;
+// Nuevo nombre para evitar conflicto
+type CategoryItem = {
+  id: Category;
   name: string;
   description: string;
   icon: string;
   color: string;
   bgColor: string;
 };
-const categories: Category[] = [
-    
+
+interface CategorySelectorProps {
+  onCategorySelect: (category: Category) => void;
+  onViewCart: () => void;
+  cartCount: number;
+}
+
+export default function CategorySelector({ onCategorySelect, onViewCart, cartCount }: CategorySelectorProps) {
+  const categories: CategoryItem[] = [
     {
       id: 'fresas',
       name: 'Fresas con Crema',
@@ -62,7 +58,6 @@ const categories: Category[] = [
   return (
     <div className="min-h-screen px-4 py-8">
       {/* Header */}
-      
       <div className="max-w-4xl mx-auto mb-8">
         <div className="flex items-center justify-between">
           <div className="text-center flex-1">
@@ -71,7 +66,7 @@ const categories: Category[] = [
             </h1>
             <p className="text-gray-600">Elige tu categoría favorita</p>
           </div>
-          
+
           {/* Cart button */}
           <button
             onClick={onViewCart}
@@ -92,7 +87,7 @@ const categories: Category[] = [
       {/* Categories grid */}
       <div className="max-w-4xl mx-auto">
         <div className="grid md:grid-cols-2 gap-6">
-          {categories.map((category: Category) => (
+          {categories.map((category) => (
             <div
               key={category.id}
               className={`${category.bgColor} rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:scale-105`}
@@ -105,17 +100,17 @@ const categories: Category[] = [
                     <i className={`${category.icon} text-3xl text-white`}></i>
                   </div>
                 </div>
-                
+
                 {/* Title */}
                 <h3 className="text-xl font-bold text-gray-800 mb-3">
                   {category.name}
                 </h3>
-                
+
                 {/* Description */}
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                   {category.description}
                 </p>
-                
+
                 {/* Select button */}
                 <button className={`bg-gradient-to-r ${category.color} text-white font-semibold py-2 px-6 rounded-full hover:shadow-lg transition-all duration-300 whitespace-nowrap`}>
                   Seleccionar

@@ -19,9 +19,9 @@ export default function ProductCustomizer({
   cartCount 
 }: ProductCustomizerProps) {
   const [selectedSize, setSelectedSize] = useState('');
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [selectedFruits, setSelectedFruits] = useState([]);
-  const [selectedSauces, setSelectedSauces] = useState([]);
+  const [selectedSauces, setSelectedSauces] = useState<string[]>([]);
   const [selectedFilling, setSelectedFilling] = useState('');
   const [selectedOblea, setSelectedOblea] = useState('');
 
@@ -160,10 +160,10 @@ export default function ProductCustomizer({
     'M&M', 'Helado', 'Burhum', 'Minichips', 'Chocorramo', 'Jumbo Maní',
     'Baño de chocolate'
   ];
+  type FruitType = '' | 'cerezas' | 'duraznos' | 'bananos';
 
-  const [selectedFruitType, setSelectedFruitType] = useState('');
-
-  const handleIngredientToggle = (ingredient, type) => {
+  const [selectedFruitType, setSelectedFruitType] = useState<FruitType>('');  
+  const handleIngredientToggle = (ingredient: string, type: string) => {
     if (selectedIngredients.includes(ingredient)) {
       setSelectedIngredients(selectedIngredients.filter(i => i !== ingredient));
     } else {
@@ -171,7 +171,7 @@ export default function ProductCustomizer({
     }
   };
 
-  const handleSauceToggle = (sauce) => {
+  const handleSauceToggle = (sauce : string) => {
     if (selectedSauces.includes(sauce)) {
       setSelectedSauces(selectedSauces.filter(s => s !== sauce));
     } else {
@@ -182,7 +182,7 @@ export default function ProductCustomizer({
   const getCurrentSizeData = () => {
     if (category === 'fresas') {
       return sizes.fresas.find(s => s.id === selectedSize);
-    } else if (category === 'frutas' && selectedFruitType) {
+    } else if (category === 'frutas' && selectedFruitType && selectedFruitType in sizes.frutas) {
       return sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize);
     } else if (category === 'chocolate') {
       return sizes.chocolate.find(s => s.id === selectedSize);
@@ -200,7 +200,7 @@ export default function ProductCustomizer({
     
     // Calcular salsas extras
     const extraSauces = Math.max(0, selectedSauces.length - sizeData.saucesIncluded);
-    const extraSaucesPrice = extraSauces * 0; // Las salsas extras no tienen costo adicional según el menú
+    const extraSaucesPrice = extraSauces * 0; // Las salsas extras no tienen costo adicional creo
     
     // Calcular toppings clásicos extras
     const availableClassicToppings = category === 'chocolate' ? toppingsClasicosChocolate : toppingsClasicos;
@@ -241,7 +241,9 @@ export default function ProductCustomizer({
       oblea: selectedOblea,
       price: calculatePrice(),
       sizeName: category === 'fresas' ? sizes.fresas.find(s => s.id === selectedSize)?.name : 
-                category === 'frutas' ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name :
+                category === 'frutas' && selectedFruitType
+  ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name
+  : 
                 category === 'chocolate' ? sizes.chocolate.find(s => s.id === selectedSize)?.name :
                 category === 'obleas' ? sizes.obleas.find(s => s.id === selectedOblea)?.name : ''
     };
@@ -342,7 +344,7 @@ export default function ProductCustomizer({
                           name="size"
                           value={size.id}
                           checked={selectedSize === size.id}
-                          onChange={(e) => setSelectedSize(e.target.value)}
+                          onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
                           className="text-pink-500"
                         />
                         <span className="font-medium text-gray-700">{size.name}</span>
@@ -368,7 +370,7 @@ export default function ProductCustomizer({
                       name="fruitType"
                       value="cerezas"
                       checked={selectedFruitType === 'cerezas'}
-                      onChange={(e) => setSelectedFruitType(e.target.value)}
+                      onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
                       className="text-pink-500"
                     />
                     <span className="font-medium text-gray-700">Cerezas</span>
@@ -379,7 +381,7 @@ export default function ProductCustomizer({
                       name="fruitType"
                       value="duraznos"
                       checked={selectedFruitType === 'duraznos'}
-                      onChange={(e) => setSelectedFruitType(e.target.value)}
+                      onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
                       className="text-pink-500"
                     />
                     <span className="font-medium text-gray-700">Duraznos</span>
@@ -390,7 +392,7 @@ export default function ProductCustomizer({
                       name="fruitType"
                       value="bananos"
                       checked={selectedFruitType === 'bananos'}
-                      onChange={(e) => setSelectedFruitType(e.target.value)}
+                      onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
                       className="text-pink-500"
                     />
                     <span className="font-medium text-gray-700">Bananos</span>
@@ -627,7 +629,9 @@ export default function ProductCustomizer({
                 <span className="text-gray-600">Tamaño:</span>
                 <span className="font-medium">
                   {category === 'fresas' ? sizes.fresas.find(s => s.id === selectedSize)?.name : 
-                   category === 'frutas' ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name : 
+                   category === 'frutas' && selectedFruitType
+                    ? sizes.frutas[selectedFruitType]?.find(s => s.id === selectedSize)?.name
+  :  
                    category === 'chocolate' ? sizes.chocolate.find(s => s.id === selectedSize)?.name : ''}
                 </span>
               </div>
