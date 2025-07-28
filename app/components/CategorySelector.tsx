@@ -26,7 +26,7 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       description: 'Fresas frescas con deliciosa crema y tus ingredientes favoritos',
       image: (
         <img
-          src="/images/fresa1.png"
+          src= "/images/fresa1.png"
           alt="Fresas con Crema"
           className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
         />
