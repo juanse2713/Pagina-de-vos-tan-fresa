@@ -1,12 +1,14 @@
 'use client';
 
+import React from 'react';
+
 export type Category = 'fresas' | 'frutas' | 'chocolate' | 'obleas' | '';
 
 type CategoryItem = {
-  id: Category; // ← Asegura que sea un valor válido
+  id: Category;
   name: string;
   description: string;
-  image: string;
+  image: JSX.Element; // ✅ ahora es un componente
   bgColor: string;
 };
 
@@ -22,28 +24,52 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
       id: 'fresas',
       name: 'Fresas con Crema',
       description: 'Fresas frescas con deliciosa crema y tus ingredientes favoritos',
-      image: '/images/fresa1.png',
+      image: (
+        <img
+          src="/images/fresa1.png"
+          alt="Fresas con Crema"
+          className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
+        />
+      ),
       bgColor: 'bg-pink-50',
     },
     {
       id: 'frutas',
       name: 'Otras Frutas con Crema',
       description: 'Cerezas, duraznos, bananos con crema y salsas especiales',
-      image: '/images/fresa2.png',
+      image: (
+        <img
+          src="/images/fresa2.png"
+          alt="Otras Frutas con Crema"
+          className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
+        />
+      ),
       bgColor: 'bg-orange-50',
     },
     {
       id: 'chocolate',
       name: 'Fresas con Chocolate',
       description: 'Fresas frescas bañadas en delicioso chocolate con toppings',
-      image: '/images/fresa3.png',
+      image: (
+        <img
+          src="/images/fresa3.png"
+          alt="Fresas con Chocolate"
+          className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
+        />
+      ),
       bgColor: 'bg-amber-50',
     },
     {
       id: 'obleas',
       name: 'Obleas',
       description: 'Obleas crujientes con rellenos deliciosos y ingredientes extra',
-      image: '/images/fresa1.png',
+      image: (
+        <img
+          src="/images/fresa1.png"
+          alt="Obleas"
+          className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
+        />
+      ),
       bgColor: 'bg-yellow-50',
     },
   ];
@@ -87,20 +113,11 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
               onClick={() => onCategorySelect(category.id)}
             >
               <div className="text-center">
-                {/* Imagen */}
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="mx-auto w-20 h-20 object-cover rounded-full shadow-md mb-4"
-                />
+                {/* Imagen como componente */}
+                {category.image}
 
-                {/* Title */}
                 <h3 className="text-xl font-bold text-gray-800 mb-3">{category.name}</h3>
-
-                {/* Description */}
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">{category.description}</p>
-
-                {/* Select button */}
                 <button className="bg-pink-400 text-white font-semibold py-2 px-6 rounded-full hover:shadow-lg transition-all duration-300 whitespace-nowrap">
                   Seleccionar
                 </button>
@@ -110,7 +127,6 @@ export default function CategorySelector({ onCategorySelect, onViewCart, cartCou
         </div>
       </div>
 
-      {/* Decorative bottom gradient */}
       <div className="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-pink-100 to-transparent pointer-events-none opacity-30"></div>
     </div>
   );
