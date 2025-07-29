@@ -66,7 +66,7 @@ export default function ProductCustomizer({
       },
       { 
         id: 'frescoloco', 
-        name: 'Fresco Loco 24onz', 
+        name: 'Freseo Loco 24onz', 
         price: 24000, 
         includes: 'Incluye tres salsas, tres toppings clásicos y dos premium',
         saucesIncluded: 3,
@@ -370,7 +370,7 @@ export default function ProductCustomizer({
                       name="fruitType"
                       value="cerezas"
                       checked={selectedFruitType === 'cerezas'}
-                      onChange={(e) => setSelectedSize(e.target.value as FruitType)}
+                      onChange={(e) => setSelectedFruitType(e.target.value as FruitType)}
                       className="text-pink-500"
                     />
                     <span className="font-medium text-gray-700">Cerezas</span>
