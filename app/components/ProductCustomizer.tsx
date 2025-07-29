@@ -65,7 +65,7 @@ export default function ProductCustomizer({
         premiumToppingsIncluded: 1
       },
       { 
-        id: 'frescoloco', 
+        id: 'freseoloco', 
         name: 'Freseo Loco 24onz', 
         price: 24000, 
         includes: 'Incluye tres salsas, tres toppings clásicos y dos premium',
